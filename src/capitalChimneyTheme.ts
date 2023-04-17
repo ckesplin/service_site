@@ -1,7 +1,7 @@
 import {createTheme} from "@mui/material";
 
 
-export const capitalChimneyLightTheme = createTheme({
+export const lightTheme = createTheme({
   palette: {
     primary: {
       main: '#006688',
@@ -16,12 +16,12 @@ export const capitalChimneyLightTheme = createTheme({
       default: '#fbfcfe',
     },
     text: {
-      primary: "#333"
+      primary: "#fff"
     }
   },
 })
 
-export const capitalChimneyDarkTheme = createTheme({
+export const darkTheme = createTheme({
   palette: {
     primary: {
       main: '#75d1ff',
@@ -36,7 +36,7 @@ export const capitalChimneyDarkTheme = createTheme({
       default: '#191c1e',
     },
     text: {
-      primary: '#fff',
+      primary: '#333',
     },
   },
 })
