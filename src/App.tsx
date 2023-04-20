@@ -1,28 +1,14 @@
-import {AppBar, Box, GlobalStyles, IconButton, Theme, ThemeProvider, Typography} from "@mui/material";
-import {darkTheme, lightTheme} from "./capitalChimneyTheme";
-import {useState} from "react";
-import {Brightness4} from "@mui/icons-material";
+import {ThemeProvider} from "@mui/material";
+import {lightTheme} from "./capitalChimneyTheme";
+import ResponsiveAppBar from "./components/ResponsiveAppBar";
+import './App.css'
 
 function App() {
-  const [theme, setTheme] = useState<Theme>(lightTheme)
 
   return (
     <div className="App">
-      <ThemeProvider theme={theme}>
-        <GlobalStyles styles={{body: {background: theme.palette.background.default}}}/>
-        <AppBar>
-          <Box display="flex" justifyContent="space-between" alignItems="center">
-            <Typography>Capital Chimney</Typography>
-            <IconButton
-              onClick={() =>
-                theme === lightTheme ? setTheme(darkTheme) : setTheme(lightTheme)
-              }
-              sx={{color: theme.palette.text.primary}}
-            >
-              <Brightness4 />
-            </IconButton>
-          </Box>
-        </AppBar>
+      <ThemeProvider theme={lightTheme}>
+        <ResponsiveAppBar />
       </ThemeProvider>
     </div>
   )
