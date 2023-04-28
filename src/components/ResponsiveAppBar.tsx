@@ -1,131 +1,42 @@
-import * as React from 'react';
-import {
-  AppBar,
-  Avatar,
-  Box,
-  Button,
-  Container,
-  IconButton,
-  Menu,
-  MenuItem,
-  Toolbar,
-  Typography
-} from "@mui/material";
-import {Menu as MenuIcon} from "@mui/icons-material";
-import '/css/ResponsiveAppBar.css'
+import './ResponsiveAppBar.css'
+import {useState} from "react"
+import mapleLeafLogo from "../assets/images/1200px-Maple_Leaf.svg.png"
+import Phone from '@mui/icons-material/PhoneInTalkOutlined'
+import {useDetectScroll} from "../hooks/useDetectScroll";
 
-const pages = [
-  'Services', 
-  'FAQ', 
-  'Contact Us', 
-  'About Us',
+const links = [
+  'who we are',
+  'what we provide',
+  'who we serve',
+  'contact',
 ];
 
 function ResponsiveAppBar() {
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
-
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElNav(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
+  const [hamburgerOpen, setHamburgerOpen] = useState(false)
+  const [scrollDir] = useDetectScroll({})
 
   return (
-    <AppBar position="static" className='app-bar'>
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <Typography
-            className='company-title'
-            fontFamily="monospace"
-            fontWeight={700}
-            letterSpacing=".3rem"
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            COMPANY NAME
-          </Typography>
-
-          
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href=""
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            LOGO
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: "flex-end" }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {page}
-              </Button>
-            ))}
-          </Box>
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' }, justifyContent: "flex-end"}}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu} sx={{color: "text.secondary"}}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-        </Toolbar>
-      </Container>
-    </AppBar>
+    <div className={`navbar ${scrollDir === "down" && 'hide'}`}>
+      <div className="logo-container">
+        <div className="logo-capital">Capital</div>
+        <div className="logo-chimney">Chimney</div>
+        <img className="logo-img" src={mapleLeafLogo} alt="capital chimney logo" />
+      </div>
+      <div className="link-container">
+        {links.map(link =>
+          <li className="link">{link}</li>)
+        }
+      </div>
+      <div className="phone-container">
+        <Phone className="phone-icon"/>
+        <a className="phone" href="tel:6138371645">(613) 837-1645</a>
+      </div>
+      <div className="hamburger-menu" onClick={() => setHamburgerOpen(!hamburgerOpen)}>
+        <span className={`line line1 ${hamburgerOpen && "menu-open"}`}></span>
+        <span className={`line line2 ${hamburgerOpen && "menu-open"}`}></span>
+        <span className={`line line3 ${hamburgerOpen && "menu-open"}`}></span>
+      </div>
+    </div>
   );
 }
 export default ResponsiveAppBar;

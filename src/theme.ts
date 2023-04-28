@@ -4,10 +4,10 @@ import {createTheme} from "@mui/material";
 export const lightTheme = createTheme({
   palette: {
     primary: {
-      main: '#006688',
+      main: '#9d0b0f',
     },
     secondary: {
-      main: '#4e616d',
+      main: '#0b9d4f',
     },
     error: {
       main: '#ba1a1a',
