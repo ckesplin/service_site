@@ -51,27 +51,30 @@ function ResponsiveAppBar() {
         sx={{width: "100%"}}
         onKeyDown={() => setHamburgerOpen(false)}
       >
-        <div className="drawer-link-container">
-          <List disablePadding sx={{width: "100%"}}>
-            {links.map(link => (
-              <ListItem
-                key={link}
-                className="drawer-list-item"
-                disableGutters
-                disablePadding
-              >
+        <List disablePadding sx={{width: "100%", paddingTop: '60px'}} className="drawer-link-container">
+          {links.map(link => (
+            <ListItem
+              key={link}
+              disableGutters
+              disablePadding
+              sx={{justifyContent: 'center'}}
+            >
+              <ScrollLink smooth spy to={link.replace(" ", "-")} >
                 <ListItemButton
                   className="drawer-link"
-                  sx={{justifyContent: "center", height: "60px"}}
+                  sx={{
+                    height: "60px",
+                    justifyContent: 'center',
+                    width: '100vw',
+                  }}
+                  onClick={() => setHamburgerOpen(false)}
                 >
-                  <ScrollLink smooth spy to={link.replace(" ", "-")} onClick={() => setHamburgerOpen(false)}>
-                    {link}
-                  </ScrollLink>
+                  {link}
                 </ListItemButton>
-              </ListItem>
-            ))}
-          </List>
-        </div>
+              </ScrollLink>
+            </ListItem>
+          ))}
+        </List>
       </Drawer>
     </>
   );
