@@ -5,4 +5,23 @@ body {
   overflow-x: hidden;
 }
 
+.App > .section {
+  display: flex;
+  align-items: flex-start;
+  padding-top: 60px;
+  height: 1000px;
+}
+.App > .section:nth-of-type(3) {
+  background-color: lightblue;
+}
+.App > .section:nth-of-type(4) {
+  background-color: aquamarine;
+}
+.App > .section:nth-of-type(5) {
+  background-color: lightpink;
+}
+.App > .section:nth-of-type(6) {
+  background-color: lightyellow;
+}
+
 /*# sourceMappingURL=App.css.map */

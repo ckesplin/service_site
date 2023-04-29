@@ -1,25 +1,26 @@
 import './ResponsiveAppBar.css'
-import {useRef, useState} from "react"
+import {useLayoutEffect, useRef, useState} from "react"
 import mapleLeafLogo from "../assets/images/1200px-Maple_Leaf.svg.png"
 import Phone from '@mui/icons-material/PhoneInTalkOutlined'
-import {useDetectScroll} from "../hooks/useDetectScroll";
-import {Box, Drawer, List, ListItem, ListItemButton} from "@mui/material";
-
-const links = [
-  'who we are',
-  'what we provide',
-  'who we serve',
-  'contact',
-];
+import {useDetectScroll} from "../hooks/useDetectScroll"
+import {Box, Drawer, List, ListItem, ListItemButton} from "@mui/material"
+import {useWindowSize} from "../hooks/useWindowSize"
+import {links} from "../App"
+import {Link as ScrollLink} from 'react-scroll'
 
 function ResponsiveAppBar() {
   const [hamburgerOpen, setHamburgerOpen] = useState(false)
   const [scrollDir] = useDetectScroll({})
+  const windowSize = useWindowSize()
   const drawerAnchorEl = useRef()
+
+  useLayoutEffect(() => {
+    if (windowSize[0] > 900) setHamburgerOpen(false)
+  }, [windowSize]);
 
   return (
     <>
-      <Box className={`navbar ${scrollDir === "down" && 'hide'}`} ref={drawerAnchorEl}>
+      <Box className={`navbar ${(scrollDir === "down") && ''}`} ref={drawerAnchorEl}>
         <div className="logo-container">
           <div className="logo-capital">Capital</div>
           <div className="logo-chimney">Chimney</div>
@@ -27,7 +28,7 @@ function ResponsiveAppBar() {
         </div>
         <div className="link-container">
           {links.map(link =>
-            <li className="link">{link}</li>)
+            <li key={link} className="link"><ScrollLink smooth spy to={link.replace(" ", "-")}>{link}</ScrollLink></li>)
           }
         </div>
         <div className="phone-container">
@@ -51,10 +52,22 @@ function ResponsiveAppBar() {
         onKeyDown={() => setHamburgerOpen(false)}
       >
         <div className="drawer-link-container">
-          <List>
-            {links.map(link =>  (
-              <ListItem key={link} className="drawer-list-item">
-                <ListItemButton className="drawer-link" sx={{justifyContent: "center"}}>{link}</ListItemButton>
+          <List disablePadding sx={{width: "100%"}}>
+            {links.map(link => (
+              <ListItem
+                key={link}
+                className="drawer-list-item"
+                disableGutters
+                disablePadding
+              >
+                <ListItemButton
+                  className="drawer-link"
+                  sx={{justifyContent: "center", height: "60px"}}
+                >
+                  <ScrollLink smooth spy to={link.replace(" ", "-")} onClick={() => setHamburgerOpen(false)}>
+                    {link}
+                  </ScrollLink>
+                </ListItemButton>
               </ListItem>
             ))}
           </List>
