@@ -9,9 +9,10 @@
   color: #fff;
   transition: transform 0.4s ease-in-out;
   z-index: 1301;
-}
-.navbar.hide {
   transform: translateY(-60px);
+}
+.navbar.show {
+  transform: translateY(0);
 }
 
 .link-container {

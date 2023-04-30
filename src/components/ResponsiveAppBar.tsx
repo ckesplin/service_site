@@ -1,5 +1,5 @@
 import './ResponsiveAppBar.css'
-import {useLayoutEffect, useRef, useState} from "react"
+import {useEffect, useLayoutEffect, useRef, useState} from "react"
 import mapleLeafLogo from "../assets/images/1200px-Maple_Leaf.svg.png"
 import Phone from '@mui/icons-material/PhoneInTalkOutlined'
 import {useDetectScroll} from "../hooks/useDetectScroll"
@@ -10,7 +10,7 @@ import {Link as ScrollLink} from 'react-scroll'
 
 function ResponsiveAppBar() {
   const [hamburgerOpen, setHamburgerOpen] = useState(false)
-  const [scrollDir] = useDetectScroll({})
+  const [scrollDir] = useDetectScroll({thr: 2})
   const windowSize = useWindowSize()
   const drawerAnchorEl = useRef()
 
@@ -18,9 +18,10 @@ function ResponsiveAppBar() {
     if (windowSize[0] > 900) setHamburgerOpen(false)
   }, [windowSize]);
 
+  console.log(scrollDir)
   return (
     <>
-      <Box className={`navbar ${(scrollDir === "down") && ''}`} ref={drawerAnchorEl}>
+      <Box className={`navbar ${(scrollDir !== "down") && 'show'}`} ref={drawerAnchorEl}>
         <div className="logo-container">
           <div className="logo-capital">Capital</div>
           <div className="logo-chimney">Chimney</div>
@@ -28,7 +29,12 @@ function ResponsiveAppBar() {
         </div>
         <div className="link-container">
           {links.map(link =>
-            <li key={link} className="link"><ScrollLink smooth spy to={link.replace(" ", "-")}>{link}</ScrollLink></li>)
+            <li key={link}
+              className="link"
+            >
+              <ScrollLink smooth spy to={link.replace(" ", "-")}>{link}</ScrollLink>
+            </li>
+          )
           }
         </div>
         <div className="phone-container">
@@ -67,7 +73,9 @@ function ResponsiveAppBar() {
                     justifyContent: 'center',
                     width: '100vw',
                   }}
-                  onClick={() => setHamburgerOpen(false)}
+                  onClick={() => {
+                    setHamburgerOpen(false)
+                  }}
                 >
                   {link}
                 </ListItemButton>
