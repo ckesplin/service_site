@@ -12,13 +12,12 @@ function App() {
 
   return (
     <div className='App'>
-      <ResponsiveAppBar />
+      <ResponsiveAppBar links={links}/>
       <div style={{height: '60px'}}></div>
       <h1 style={{height: '500px'}}>Klee's pretty face here</h1>
-      <div className="section" id={links[0].replace(" ", "-")}>{links[0]}</div>
-      <div className="section" id={links[1].replace(" ", "-")}>{links[1]}</div>
-      <div className="section" id={links[2].replace(" ", "-")}>{links[2]}</div>
-      <div className="section" id={links[3].replace(" ", "-")}>{links[3]}</div>
+      {links.map(link => (
+        <div key={link} className="section" id={link.replace(" ", "-")}>{link}</div>
+      ))}
     </div>
   )
 }

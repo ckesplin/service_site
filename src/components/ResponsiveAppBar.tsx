@@ -5,10 +5,15 @@ import Phone from '@mui/icons-material/PhoneInTalkOutlined'
 import {useDetectScroll} from "../hooks/useDetectScroll"
 import {Box, Drawer, List, ListItem, ListItemButton} from "@mui/material"
 import {useWindowSize} from "../hooks/useWindowSize"
-import {links} from "../App"
 import {Link as ScrollLink} from 'react-scroll'
 
-function ResponsiveAppBar() {
+
+interface ResponsiveAppBarProps {
+  links: string[]
+}
+
+function ResponsiveAppBar(props: ResponsiveAppBarProps) {
+  const {links} = props
   const [hamburgerOpen, setHamburgerOpen] = useState(false)
   const [scrollDir] = useDetectScroll({thr: 2})
   const windowSize = useWindowSize()
@@ -32,7 +37,7 @@ function ResponsiveAppBar() {
             <li key={link}
               className="link"
             >
-              <ScrollLink smooth spy to={link.replace(" ", "-")}>{link}</ScrollLink>
+              <ScrollLink smooth to={link.replace(" ", "-")}>{link}</ScrollLink>
             </li>
           )
           }
@@ -65,7 +70,7 @@ function ResponsiveAppBar() {
               disablePadding
               sx={{justifyContent: 'center'}}
             >
-              <ScrollLink smooth spy to={link.replace(" ", "-")} >
+              <ScrollLink smooth to={link.replace(" ", "-")} >
                 <ListItemButton
                   className="drawer-link"
                   sx={{
