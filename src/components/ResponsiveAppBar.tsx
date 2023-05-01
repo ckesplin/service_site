@@ -6,6 +6,7 @@ import {useDetectScroll} from "../hooks/useDetectScroll"
 import {Box, Drawer, List, ListItem, ListItemButton} from "@mui/material"
 import {useWindowSize} from "../hooks/useWindowSize"
 import {Link as ScrollLink} from 'react-scroll'
+import {Menu} from "@mui/icons-material";
 
 
 interface ResponsiveAppBarProps {
@@ -14,19 +15,17 @@ interface ResponsiveAppBarProps {
 
 function ResponsiveAppBar(props: ResponsiveAppBarProps) {
   const {links} = props
-  const [hamburgerOpen, setHamburgerOpen] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
   const [scrollDir] = useDetectScroll({thr: 2})
-  const windowSize = useWindowSize()
-  const drawerAnchorEl = useRef()
+  const horizWinSize = useWindowSize()[0]
 
   useLayoutEffect(() => {
-    if (windowSize[0] > 900) setHamburgerOpen(false)
-  }, [windowSize]);
+    if (horizWinSize > 900) setMenuOpen(false)
+  }, [horizWinSize])
 
-  console.log(scrollDir)
   return (
     <>
-      <Box className={`navbar ${(scrollDir !== "down") && 'show'}`} ref={drawerAnchorEl}>
+      <Box className={`navbar ${(scrollDir === "down") && 'hide'}`}>
         <div className="logo-container">
           <div className="logo-capital">Capital</div>
           <div className="logo-chimney">Chimney</div>
@@ -34,9 +33,7 @@ function ResponsiveAppBar(props: ResponsiveAppBarProps) {
         </div>
         <div className="link-container">
           {links.map(link =>
-            <li key={link}
-              className="link"
-            >
+            <li key={link} className="link">
               <ScrollLink smooth to={link.replace(" ", "-")}>{link}</ScrollLink>
             </li>
           )
@@ -46,21 +43,20 @@ function ResponsiveAppBar(props: ResponsiveAppBarProps) {
           <Phone className="phone-icon"/>
           <a className="phone" href="tel:6138371645">(613) 837-1645</a>
         </div>
-        <div className="hamburger-menu" onClick={() => setHamburgerOpen(!hamburgerOpen)}>
-          <span className={`line line1 ${hamburgerOpen && "menu-open"}`}></span>
-          <span className={`line line2 ${hamburgerOpen && "menu-open"}`}></span>
-          <span className={`line line3 ${hamburgerOpen && "menu-open"}`}></span>
-        </div>
-
+        <Menu
+          onClick={() => setMenuOpen(!menuOpen)}
+          className="menu-button"
+          fontSize={"large"}
+        />
       </Box>
       <Drawer
         anchor="top"
-        open={hamburgerOpen}
+        open={menuOpen}
         variant="temporary"
         hideBackdrop
         elevation={0}
         sx={{width: "100%"}}
-        onKeyDown={() => setHamburgerOpen(false)}
+        onKeyDown={() => setMenuOpen(false)}
       >
         <List disablePadding sx={{width: "100%", paddingTop: '60px'}} className="drawer-link-container">
           {links.map(link => (
@@ -70,7 +66,7 @@ function ResponsiveAppBar(props: ResponsiveAppBarProps) {
               disablePadding
               sx={{justifyContent: 'center'}}
             >
-              <ScrollLink smooth to={link.replace(" ", "-")} >
+              <ScrollLink smooth to={link.replace(" ", "-")}>
                 <ListItemButton
                   className="drawer-link"
                   sx={{
@@ -79,7 +75,7 @@ function ResponsiveAppBar(props: ResponsiveAppBarProps) {
                     width: '100vw',
                   }}
                   onClick={() => {
-                    setHamburgerOpen(false)
+                    setMenuOpen(false)
                   }}
                 >
                   {link}

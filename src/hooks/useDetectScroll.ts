@@ -52,15 +52,15 @@ export function useDetectScroll(props: useDetectScrollProps) {
         let lastScroll = 0;
 
         axis === "y"
-            ? (lastScroll = window.pageYOffset)
-            : (lastScroll = window.pageXOffset);
+            ? (lastScroll = window.scrollY)
+            : (lastScroll = window.scrollX);
 
         const updateScrollDir = () => {
             let scroll = undefined;
 
             axis === "y"
-                ? (scroll = window.pageYOffset)
-                : (scroll = window.pageXOffset);
+                ? (scroll = window.scrollY)
+                : (scroll = window.scrollX);
 
             if (Math.abs(scroll - lastScroll) < threshold) {
                 ticking = false;
