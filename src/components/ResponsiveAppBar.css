@@ -67,7 +67,7 @@
 
 .menu-button {
   position: absolute;
-  right: 12px;
+  right: 48px;
 }
 
 li {
@@ -85,7 +85,7 @@ li {
 }
 
 .phone-container {
-  margin-right: 12px;
+  padding-right: 36px;
   width: 150px;
   display: flex;
   justify-content: space-between;

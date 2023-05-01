@@ -16,6 +16,7 @@ interface ResponsiveAppBarProps {
 function ResponsiveAppBar(props: ResponsiveAppBarProps) {
   const {links} = props
   const [menuOpen, setMenuOpen] = useState(false)
+  const [linkClicked, setLinkClicked] = useState(false)
   const [scrollDir] = useDetectScroll({thr: 2})
   const horizWinSize = useWindowSize()[0]
 
@@ -23,9 +24,22 @@ function ResponsiveAppBar(props: ResponsiveAppBarProps) {
     if (horizWinSize > 900) setMenuOpen(false)
   }, [horizWinSize])
 
+  useEffect(() => {
+    const resetLinkClicked = () => setLinkClicked(false)
+    window.addEventListener("wheel", resetLinkClicked)
+    window.addEventListener("touchstart", resetLinkClicked)
+
+    return () => {
+      window.removeEventListener("wheel", resetLinkClicked)
+      window.removeEventListener("touchStart", resetLinkClicked)
+    }
+  }, [])
+
+  console.log(linkClicked)
+
   return (
     <>
-      <Box className={`navbar ${(scrollDir === "down") && 'hide'}`}>
+      <Box className={`navbar ${(scrollDir === "down" || linkClicked) && 'hide'}`}>
         <div className="logo-container">
           <div className="logo-capital">Capital</div>
           <div className="logo-chimney">Chimney</div>
@@ -34,7 +48,6 @@ function ResponsiveAppBar(props: ResponsiveAppBarProps) {
         <div className="link-container">
           {links.map(link =>
             <li key={link} className="link">
-              <ScrollLink smooth to={link.replace(" ", "-")}>{link}</ScrollLink>
             </li>
           )
           }
@@ -76,6 +89,7 @@ function ResponsiveAppBar(props: ResponsiveAppBarProps) {
                   }}
                   onClick={() => {
                     setMenuOpen(false)
+                    setLinkClicked(true)
                   }}
                 >
                   {link}
