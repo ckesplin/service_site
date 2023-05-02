@@ -1,7 +1,7 @@
-import ResponsiveAppBar from "./components/ResponsiveAppBar";
+import ResponsiveAppBar from "./components/ResponsiveNavbar";
 import "./App.css"
 
-export const links = [
+export const pageLinks = [
   'who we are',
   'what we provide',
   'who we serve',
@@ -12,10 +12,10 @@ function App() {
 
   return (
     <div className='App'>
-      <ResponsiveAppBar links={links}/>
+      <ResponsiveAppBar links={pageLinks}/>
       <div style={{height: '60px'}}></div>
       <h1 style={{height: '500px'}}>Klee's pretty face here</h1>
-      {links.map(link => (
+      {pageLinks.map(link => (
         <div key={link} className="section" id={link.replace(" ", "-")}>{link}</div>
       ))}
     </div>

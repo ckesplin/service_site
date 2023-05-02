@@ -1,5 +1,5 @@
-import './ResponsiveAppBar.css'
-import {useEffect, useLayoutEffect, useRef, useState} from "react"
+import './ResponsiveNavbar.css'
+import {useEffect, useLayoutEffect, useState} from "react"
 import mapleLeafLogo from "../assets/images/1200px-Maple_Leaf.svg.png"
 import Phone from '@mui/icons-material/PhoneInTalkOutlined'
 import {useDetectScroll} from "../hooks/useDetectScroll"
@@ -13,7 +13,7 @@ interface ResponsiveAppBarProps {
   links: string[]
 }
 
-function ResponsiveAppBar(props: ResponsiveAppBarProps) {
+function ResponsiveNavbar(props: ResponsiveAppBarProps) {
   const {links} = props
   const [menuOpen, setMenuOpen] = useState(false)
   const [linkClicked, setLinkClicked] = useState(false)
@@ -47,8 +47,11 @@ function ResponsiveAppBar(props: ResponsiveAppBarProps) {
         </div>
         <div className="link-container">
           {links.map(link =>
-            <li key={link} className="link">
-            </li>
+            <ScrollLink smooth to={link.replace(" ", "-")} className="link">
+              <div key={link} onClick={() => setLinkClicked(true)}>
+                {link}
+              </div>
+            </ScrollLink>
           )
           }
         </div>
@@ -103,4 +106,4 @@ function ResponsiveAppBar(props: ResponsiveAppBarProps) {
   );
 }
 
-export default ResponsiveAppBar;
+export default ResponsiveNavbar;
